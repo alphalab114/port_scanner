@@ -16,18 +16,26 @@ import socket
 #===========================================================
 #      INPUTS
 
-#from_port= input("From Port:")
-#to_port = input("To Port: ")
-#target_ip = input("Target IP : (x.x.x.x) : ")
+"""
+from_port= input("From Port:")
+to_port = input("To Port: ")
+target_ip = input("Target IP : (x.x.x.x) : ")
+"""
+
+#===========================================
+#============for Debugging===================
+
 
 from_port=1
 to_port=100
-
 target_ip = "10.10.251.138"
-
-
 print( from_port, to_port, target_ip) #for debug
 
+#==========debugging_end====================
+
+
+#==========================================
+#         Functions
 
 def scan_socket(host,port):
 	s = socket.socket()
@@ -38,10 +46,13 @@ def scan_socket(host,port):
 
 
 
+#============================================
+#        Main
 
-for port in range(int(from_port), int(to_port)):
-	if scan_socket(target_ip,port):
-		print(port, "open")
+
+for port_to_scan in range(int(from_port), int(to_port)):
+	if scan_socket(target_ip,port_to_scan):
+		print(port_to_scan, "open")
 
 
 
