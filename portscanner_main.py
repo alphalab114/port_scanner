@@ -7,20 +7,40 @@
 #============================================================
 
 #===========================================================
-#       IMPORTS
+#  >>  IMPORTS
 
 import socket
 
 
 
 #==========================================
-#         Classes
+#  >>  Ip Scanner
+#  >> scanning for all available IPs
+
+#-------->  to DO
+
+#==========================================
+#  >>  DataClasses
+#  >> this is my struct for all Data, and because there is no struct in python I use CLASS
 
 
 class CLASS_Ports:
 	def __init__(self, number):
 		self.number = number
 		self.open = False
+
+
+class CLASS_Network_Data:
+	def __init__ (self, ip_adress, host_name):
+		self.ip_adress=ip_adress
+		self.host_name = host_name
+
+
+
+
+#==========================================
+#  >>  Port Scanner
+#  >> scanning for all available Ports, get Ip from IP Scanner
 
 
 class CLASS_Port_Scanner:
@@ -85,10 +105,12 @@ class CLASS_Port_Scanner:
 
 
 #============================================
-#        Main
+#  >>  Main
 
 if __name__ == "__main__": #script entry point code will only executed when called directly
 
+#======================================
+#  >> Input Section
 	host_input = "192.168.178.1"   	#input("Host eigeben:")
 	start_port_input = int(0) 		#input("startport eingeben")
 	end_port_input = int(15)   	#input("Endport eigeben")
