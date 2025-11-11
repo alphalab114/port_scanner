@@ -31,8 +31,8 @@ class CLASS_Port_Scanner:
 		self.results = []
 		
 
-
-	def _scan_one_port(self,port_number):
+	# "private" methods --> mangling
+	def __scan_one_port(self,port_number):
 		print("======DEBUG======\nCALL of Function:  _scan_one_port  \n=======DEBUG END=======")# only for Debugging
 		p = CLASS_Ports(port_number)
 		try:
@@ -51,12 +51,12 @@ class CLASS_Port_Scanner:
 		return p
 
 
-
+	# public methods
 	def scan_range_of_port(self, startport, endport):
 		print("======DEBUG======\nCALL of Function:  scan_range_of_port  \n=======DEBUG END=======")# only for Debugging
 		self.results = []
 		for port_to_scan in range(startport, endport):
-			self.results.append(self._scan_one_port(port_to_scan))
+			self.results.append(self.__scan_one_port(port_to_scan))
 		return self.results
 		
 
