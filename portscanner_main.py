@@ -13,27 +13,6 @@ import socket
 
 
 
-#===========================================================
-#      INPUTS
-
-"""
-from_port= input("From Port:")
-to_port = input("To Port: ")
-target_ip = input("Target IP : (x.x.x.x) : ")
-"""
-
-#===========================================
-#============for Debugging===================
-
-"""
-from_port=1
-to_port=100
-target_ip = "10.10.251.138"
-print( from_port, to_port, target_ip) #for debug
-"""
-
-#==========debugging_end====================
-
 #==========================================
 #         Classes
 
@@ -46,7 +25,7 @@ class CLASS_Ports:
 
 class CLASS_Port_Scanner:
 	def __init__(self, host, timeout):
-		print("init")
+		print("======DEBUG======\nCALL of Function:  __init__  \n=======DEBUG END=======")  # only for Debugging
 		self.host=host
 		self.timeout = timeout
 		self.results = []
@@ -54,7 +33,7 @@ class CLASS_Port_Scanner:
 
 
 	def _scan_one_port(self,port_number):
-		print("call scan one port")
+		print("======DEBUG======\nCALL of Function:  _scan_one_port  \n=======DEBUG END=======")# only for Debugging
 		p = CLASS_Ports(port_number)
 		try:
 			with socket.socket() as s:
@@ -74,45 +53,49 @@ class CLASS_Port_Scanner:
 
 
 	def scan_range_of_port(self, startport, endport):
-		print("call scanrange of ports", startport,endport)
+		print("======DEBUG======\nCALL of Function:  scan_range_of_port  \n=======DEBUG END=======")# only for Debugging
 		self.results = []
 		for port_to_scan in range(startport, endport):
 			self.results.append(self._scan_one_port(port_to_scan))
 		return self.results
 		
 
-
 	def print_all_ports(self):
-		print("print findings call")
+		print("======DEBUG======\nCALL of Function: print_all_ports\n=======DEBUG END=======")# only for Debugging
+		if not self.results:  #check if empty or falsy
+			print("Daten sind leer oder fehlerhaft, sorry!!!")
+
 		for p in self.results:
 			if p.open == True:
 				print("Port: " , p.number , " open")
 			else:
 				print("Port: " , p.number , " NA")
 
+	
 
+	def print_all_open_ports(self):
+		print("======DEBUG======\nCALL of Function: print_all_open_ports\n=======DEBUG END=======")# only for Debugging
+		if not self.results: #check if empty or falsy
+			print("Daten sind leer oder fehlerhaft, sorry!!!")
 
-
-
-
+		for p in self.results:
+			if p.open == True:
+				print("Port: " , p.number , " open")
 			
-
-
 
 
 #============================================
 #        Main
 
-if __name__ == "__main__":
+if __name__ == "__main__": #script entry point code will only executed when called directly
 
 	host_input = "192.168.178.1"   	#input("Host eigeben:")
 	start_port_input = int(0) 		#input("startport eingeben")
-	end_port_input = int(100)   	#input("Endport eigeben")
-
-
-scanner = CLASS_Port_Scanner(host_input, timeout=0.4)
-scanner.scan_range_of_port(start_port_input,end_port_input)
-scanner.print_all_ports()
+	end_port_input = int(15)   	#input("Endport eigeben")
+	scanner = CLASS_Port_Scanner(host_input, timeout=0.4)
+	scanner.scan_range_of_port(start_port_input,end_port_input)
+	scanner.print_all_ports()
+	scanner.print_all_open_ports()
 
 
 
