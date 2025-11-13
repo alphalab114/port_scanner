@@ -4,6 +4,10 @@
 # only for Educational Purposes
 # writen by Spongebob Squarepants and Tadeus Tentakel
 #
+#Function:
+#  --  Scanning Ports
+#  --  Scanning IPs
+#
 #============================================================
 
 #===========================================================
@@ -111,9 +115,15 @@ if __name__ == "__main__": #script entry point code will only executed when call
 
 #======================================
 #  >> Input Section
+
 	host_input = "192.168.178.1"   	#input("Host eigeben:")
 	start_port_input = int(0) 		#input("startport eingeben")
 	end_port_input = int(15)   	#input("Endport eigeben")
+
+
+#=======================================
+#  >>  Excecution Section
+
 	scanner = CLASS_Port_Scanner(host_input, timeout=0.4)
 	scanner.scan_range_of_port(start_port_input,end_port_input)
 	scanner.print_all_ports()
