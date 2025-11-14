@@ -14,21 +14,16 @@
 #  >>  IMPORTS
 
 import socket
+import ipaddress
+import subprocess
 
-
-
-#==========================================
-#  >>  Ip Scanner
-#  >> scanning for all available IPs
-
-#-------->  to DO
 
 #==========================================
 #  >>  DataClasses
 #  >> this is my struct for all Data, and because there is no struct in python I use CLASS
 
 
-class CLASS_Ports:
+class CLASS_Port_Data:
 	def __init__(self, number):
 		self.number = number
 		self.open = False
@@ -39,6 +34,31 @@ class CLASS_Network_Data:
 		self.ip_adress=ip_adress
 		self.host_name = host_name
 
+
+
+#==========================================
+#  >>  Ip Scanner
+#  >> scanning for all available IPs
+
+#-------->  to DO
+
+class CLASS_IP_Scanner:
+	def __init__(self, timeout_ping):
+		self.timeout_ping = timeout_ping
+
+
+	def _ping_host(host):
+		args = ["ping", "1", host]
+		
+		subprocess.run(args)
+		print(args)
+
+"""
+ try:
+         subprocess.run(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=timeout_s)
+       
+  
+"""
 
 
 
@@ -58,7 +78,7 @@ class CLASS_Port_Scanner:
 	# "private" methods --> mangling
 	def __scan_one_port(self,port_number):
 		print("======DEBUG======\nCALL of Function:  _scan_one_port  \n=======DEBUG END=======")# only for Debugging
-		p = CLASS_Ports(port_number)
+		p = CLASS_Port_Data(port_number)
 		try:
 			with socket.socket() as s:
 				s.settimeout(self.timeout)
@@ -124,10 +144,15 @@ if __name__ == "__main__": #script entry point code will only executed when call
 #=======================================
 #  >>  Excecution Section
 
+"""
 	scanner = CLASS_Port_Scanner(host_input, timeout=0.4)
 	scanner.scan_range_of_port(start_port_input,end_port_input)
 	scanner.print_all_ports()
 	scanner.print_all_open_ports()
+"""
+
+ipscanner = CLASS_IP_Scanner
+ipscanner._ping_host(host_input)
 
 
 
