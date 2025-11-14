@@ -14,8 +14,9 @@
 #  >>  IMPORTS
 
 import socket
-import ipaddress
 import subprocess
+import platform
+
 
 
 #==========================================
@@ -40,26 +41,40 @@ class CLASS_Network_Data:
 #  >>  Ip Scanner
 #  >> scanning for all available IPs
 
-#-------->  to DO
-
 class CLASS_IP_Scanner:
-	def __init__(self, timeout_ping):
+	def __init__(self, timeout_ping, ping_count):
 		self.timeout_ping = timeout_ping
+		self.ping_count= str(ping_count)
 
+	def _ping_host(self, host):
+		print("DEBUG def _ping_host ") # only for Debugging
+		print(self.timeout_ping,  self.ping_count)
 
-	def _ping_host(host):
-		args = ["ping", "1", host]
+		host_system = platform.system().lower()
+		print(host_system)
 		
-		subprocess.run(args)
-		print(args)
+		if host_system == "windows":
+			ping_command = ["ping", "-n", self.ping_count, host]
+		else:
+			ping_command = ["ping", "-c", self.ping_count, host]
+		
+		print(ping_command)
+		try:
+			result = subprocess.run(ping_command, timeout=self.timeout_ping)
+			print(result)  #for debug
+			if result:
+				return True
+			else:
+				return False
+		except subprocess.TimeoutExpired:
+			print(" PING Timeout ")
+			return False
+		except:
+			print("Ein leichter und ganz normaler erwarteter Fehler ist beim ping aufgetreten ")
+			return False
 
-"""
- try:
-         subprocess.run(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=timeout_s)
-       
-  
-"""
 
+		
 
 
 #==========================================
@@ -133,16 +148,20 @@ class CLASS_Port_Scanner:
 
 if __name__ == "__main__": #script entry point code will only executed when called directly
 
-#======================================
-#  >> Input Section
-
 	host_input = "192.168.178.1"   	#input("Host eigeben:")
 	start_port_input = int(0) 		#input("startport eingeben")
 	end_port_input = int(15)   	#input("Endport eigeben")
+	input_ping_timeout = int(2)
+	input_ping_count = int(3)
 
 
-#=======================================
-#  >>  Excecution Section
+
+	ipscanner = CLASS_IP_Scanner(input_ping_timeout, input_ping_count)
+	ipscanner._ping_host(host_input)
+
+
+
+
 
 """
 	scanner = CLASS_Port_Scanner(host_input, timeout=0.4)
@@ -151,14 +170,9 @@ if __name__ == "__main__": #script entry point code will only executed when call
 	scanner.print_all_open_ports()
 """
 
-ipscanner = CLASS_IP_Scanner
-ipscanner._ping_host(host_input)
 
 
 
 
 
-
-
-
-
+#  --> toDO  namin ändern nach input_...
