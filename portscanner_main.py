@@ -148,16 +148,14 @@ class CLASS_Port_Scanner:
 
 if __name__ == "__main__": #script entry point code will only executed when called directly
 
-	host_input = "192.168.178.1"   	#input("Host eigeben:")
-	start_port_input = int(0) 		#input("startport eingeben")
-	end_port_input = int(15)   	#input("Endport eigeben")
-	input_ping_timeout = int(2)
-	input_ping_count = int(3)
+	input__host = "192.168.178.1"   	#input("Host eigeben:")
+	input__start_port = int(0) 		#input("startport eingeben")
+	input__end_port = int(15)   	#input("Endport eigeben")
+	input__ping_timeout = int(2)
+	input__ping_count = int(3)
 
-
-
-	ipscanner = CLASS_IP_Scanner(input_ping_timeout, input_ping_count)
-	ipscanner._ping_host(host_input)
+	ipscanner = CLASS_IP_Scanner(input__ping_timeout, input__ping_count)
+	ipscanner._ping_host(input__host)
 
 
 
