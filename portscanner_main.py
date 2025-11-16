@@ -40,6 +40,7 @@ class CLASS_Network_Data:
 #==========================================
 #  >>  Ip Scanner
 #  >> scanning for all available IPs
+#  >> this is also called Horizontal Scanning
 
 class CLASS_IP_Scanner:
 	def __init__(self, timeout_ping, ping_count):
@@ -80,7 +81,7 @@ class CLASS_IP_Scanner:
 #==========================================
 #  >>  Port Scanner
 #  >> scanning for all available Ports, get Ip from IP Scanner
-
+#  >>  this is also called Vertical Scanning
 
 class CLASS_Port_Scanner:
 	def __init__(self, host, timeout):
