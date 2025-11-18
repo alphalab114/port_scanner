@@ -43,13 +43,15 @@ class CLASS_Network_Data:
 #  >> this is also called Horizontal Scanning
 
 class CLASS_IP_Scanner:
-	def __init__(self, timeout_ping, ping_count):
+	def __init__(self, timeout_ping, ping_count, netadress):
 		self.timeout_ping = timeout_ping
 		self.ping_count= str(ping_count)
+		self.netadress= netadress
 
-	def _ping_host(self, host):
+	# private methods
+	def _ping_host(self, host):  # make private
 		print("DEBUG def _ping_host ") # only for Debugging
-		print(self.timeout_ping,  self.ping_count)
+		print(self.timeout_ping,  self.ping_count) # only for Debugging
 
 		host_system = platform.system().lower()
 		print(host_system)
@@ -75,6 +77,22 @@ class CLASS_IP_Scanner:
 			return False
 
 
+	# public Methods
+	def _scan_ip_range(self):
+		print("DEBUG -- Method _scan_ip_range ")
+		netadress1 = self.netadress
+		scanning = netadress1.rstrip("0")
+
+		print(scanning) # debug
+
+		for step in range(0, 5):
+			ip_to_scan = scanning + str(step)
+			result = self._ping_host(ip_to_scan)
+			print(ip_to_scan)
+
+
+
+
 		
 
 
@@ -82,6 +100,7 @@ class CLASS_IP_Scanner:
 #  >>  Port Scanner
 #  >> scanning for all available Ports, get Ip from IP Scanner
 #  >>  this is also called Vertical Scanning
+
 
 class CLASS_Port_Scanner:
 	def __init__(self, host, timeout):
@@ -150,13 +169,16 @@ class CLASS_Port_Scanner:
 if __name__ == "__main__": #script entry point code will only executed when called directly
 
 	input__host = "192.168.178.1"   	#input("Host eigeben:")
+	input_Netadress ="192.168.178.0"    # input("Netzadresse eigeben: format xxx.xxx.xxx.0")
 	input__start_port = int(0) 		#input("startport eingeben")
 	input__end_port = int(15)   	#input("Endport eigeben")
 	input__ping_timeout = int(2)
-	input__ping_count = int(3)
+	input__ping_count = int(1)
 
-	ipscanner = CLASS_IP_Scanner(input__ping_timeout, input__ping_count)
+	ipscanner = CLASS_IP_Scanner(input__ping_timeout, input__ping_count, input_Netadress)
 	ipscanner._ping_host(input__host)
+	ipscanner._scan_ip_range()
+
 
 
 
@@ -169,9 +191,3 @@ if __name__ == "__main__": #script entry point code will only executed when call
 	scanner.print_all_open_ports()
 """
 
-
-
-
-
-
-#  --> toDO  namin ändern nach input_...
