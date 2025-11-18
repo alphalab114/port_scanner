@@ -47,6 +47,7 @@ class CLASS_IP_Scanner:
 		self.timeout_ping = timeout_ping
 		self.ping_count= str(ping_count)
 		self.netadress= netadress
+		self.results_ip= []
 
 	# private methods
 	def _ping_host(self, host):  # make private
@@ -80,19 +81,23 @@ class CLASS_IP_Scanner:
 	# public Methods
 	def _scan_ip_range(self):
 		print("DEBUG -- Method _scan_ip_range ")
-		netadress1 = self.netadress
-		scanning = netadress1.rstrip("0")
+		#netadress1 = self.netadress
+		scanning = self.netadress.rstrip("0")
 
 		print(scanning) # debug
 
-		for step in range(0, 5):
-			ip_to_scan = scanning + str(step)
-			result = self._ping_host(ip_to_scan)
-			print(ip_to_scan)
+		try:
+			for step in range(0, 5):
+				ip_to_scan = scanning + str(step)
+				print(ip_to_scan) # debug
+				result = self._ping_host(ip_to_scan)
+				self.results_ip.append(result)
+				print(ip_to_scan) # debug
+		except:
+			print("Except _scan_ip_range")
 
-
-
-
+		return self.results_ip
+	
 		
 
 
@@ -107,7 +112,7 @@ class CLASS_Port_Scanner:
 		print("======DEBUG======\nCALL of Function:  __init__  \n=======DEBUG END=======")  # only for Debugging
 		self.host=host
 		self.timeout = timeout
-		self.results = []
+		self.results_port = []
 		
 
 	# "private" methods --> mangling
@@ -133,18 +138,18 @@ class CLASS_Port_Scanner:
 	# public methods
 	def scan_range_of_port(self, startport, endport):
 		print("======DEBUG======\nCALL of Function:  scan_range_of_port  \n=======DEBUG END=======")# only for Debugging
-		self.results = []
+		self.results_port = []
 		for port_to_scan in range(startport, endport):
-			self.results.append(self.__scan_one_port(port_to_scan))
-		return self.results
+			self.results_port.append(self.__scan_one_port(port_to_scan))
+		return self.results_port
 		
 
 	def print_all_ports(self):
 		print("======DEBUG======\nCALL of Function: print_all_ports\n=======DEBUG END=======")# only for Debugging
-		if not self.results:  #check if empty or falsy
+		if not self.results_port:  #check if empty or falsy
 			print("Daten sind leer oder fehlerhaft, sorry!!!")
 
-		for p in self.results:
+		for p in self.results_port:
 			if p.open == True:
 				print("Port: " , p.number , " open")
 			else:
@@ -154,10 +159,10 @@ class CLASS_Port_Scanner:
 
 	def print_all_open_ports(self):
 		print("======DEBUG======\nCALL of Function: print_all_open_ports\n=======DEBUG END=======")# only for Debugging
-		if not self.results: #check if empty or falsy
+		if not self.results_port: #check if empty or falsy
 			print("Daten sind leer oder fehlerhaft, sorry!!!")
 
-		for p in self.results:
+		for p in self.results_port:
 			if p.open == True:
 				print("Port: " , p.number , " open")
 			
